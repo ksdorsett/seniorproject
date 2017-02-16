@@ -15,6 +15,12 @@ local scene = composer.newScene( sceneName )
 
 local shapeArray = {"Circle", "Triangle", "Square", "Rectangle", "Diamond", "Oval"}
 
+local displayObjects = {}
+
+function spawnRandomShape()
+    local newShape =
+
+
 ---------------------------------------------------------------------------------
 
 local nextSceneButton
