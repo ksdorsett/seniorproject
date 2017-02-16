@@ -12,13 +12,33 @@ local composer = require( "composer" )
 local scene = composer.newScene( sceneName )
 
 ---------------------------------------------------------------------------------
+-- Displayed Shape Remover
+
+function removeDisplayedShapes()
+    for i=1, table.getn(displayObjects) do
+        display.remove(displayedObjects[i])
+    end
+end
+
+---------------------------------------------------------------------------------
+-- Shape Spawner
 
 local shapeArray = {"Circle", "Triangle", "Square", "Rectangle", "Diamond", "Oval"}
 
+--Storing objects currently displayed on screen
 local displayObjects = {}
 
 function spawnRandomShape()
-    local newShape =
+    local newShape = display.newImage("images/shapes/"..shapeArray[math.random(table.getn(shapeArray))]..".png")
+    newShape.height=100
+    newShape.width=100
+    newShape.x=display.contentWidth/2
+    newShape.y=display.contentHeight/2
+    table.insert(displayObjects,newShape)
+end
+
+---------------------------------------------------------------------------------
+--Remove shape and spawn new one
 
 
 ---------------------------------------------------------------------------------
@@ -63,6 +83,8 @@ function scene:show( event )
         	-- add the touch event listener to the button
         	nextSceneButton:addEventListener( "touch", nextSceneButton )
         end
+
+        spawnRandomShape()
     end 
 end
 
