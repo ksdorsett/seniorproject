@@ -7,6 +7,7 @@
 local sceneName = ...
 
 local composer = require( "composer" )
+local physics = require( "physics" )
 
 -- Load scene with same root filename as this file
 local scene = composer.newScene( sceneName )
@@ -36,6 +37,7 @@ function spawnRandomShape()
     newShape.y=display.contentHeight/2
     table.insert(displayObjects,newShape)
     newShape:addEventListener("touch", onShapeTouch)
+    physics.addBody(newShape)
 end
 
 function onShapeTouch(event)
@@ -91,6 +93,9 @@ function scene:show( event )
         	-- add the touch event listener to the button
         	nextSceneButton:addEventListener( "touch", nextSceneButton )
         end
+
+        physics.start() --true/false for sleeping bodies
+        physics.setGravity( 0, 6 )
 
         spawnRandomShape()
     end 
