@@ -31,13 +31,15 @@ local onShapeTouch,spawnRandomShape
 
 function spawnRandomShape()
     local newShape = display.newImage("images/shapes/"..shapeArray[math.random(table.getn(shapeArray))]..".png")
-    newShape.height=100
-    newShape.width=100
-    newShape.x=display.contentWidth/2
-    newShape.y=display.contentHeight/2
+    --newShape.height=100
+    --newShape.width=100
+    newShape:scale(.1,.1)
+    newShape.x=display.contentWidth/4+math.random(display.contentWidth/2)
+    newShape.y=display.contentHeight/4+math.random(display.contentHeight/2)
     table.insert(displayObjects,newShape)
     newShape:addEventListener("touch", onShapeTouch)
     physics.addBody(newShape)
+    newShape.bodyType = "dynamic"
 end
 
 function onShapeTouch(event)
