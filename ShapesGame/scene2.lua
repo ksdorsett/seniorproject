@@ -14,6 +14,37 @@ local scene = composer.newScene( sceneName )
 local displayObjects = {}
 
 ---------------------------------------------------------------------------------
+-- Create Boundries
+local boundry = {}
+function boundryBuilder()
+    print(display.contentHeight)
+    print(display.contentWidth)
+    local line1 = display.newLine(0,0,0,display.contentHeight)
+    line1:setStrokeColor( 1, 0, 0, 1 )
+    line1.strokeWidth = 8
+    local line2 = display.newLine(0,display.contentHeight,
+        display.contentWidth,display.contentHeight)
+    line2:setStrokeColor( 1, 0, 0, 1 )
+    line2.strokeWidth = 8
+    local line3 = display.newLine(display.contentWidth,display.contentHeight,
+        display.contentWidth,0)
+    line3:setStrokeColor( 1, 0, 0, 1 )
+    line3.strokeWidth = 8
+    local line4 = display.newLine(0,0,display.contentWidth,0)
+    line4:setStrokeColor( 1, 0, 0, 1 )
+    line4.strokeWidth = 8
+    table.insert(boundry,line1)
+    table.insert(boundry,line2)
+    table.insert(boundry,line3)
+    table.insert(boundry,line4)
+    physics.addBody(line1,"static")
+    physics.addBody(line2,"static")
+    physics.addBody(line3,"static")
+    physics.addBody(line4,"static")
+end
+
+
+---------------------------------------------------------------------------------
 -- Displayed Shape Remover
 function removeDisplayedShapes()
     for i=1, table.getn(displayObjects) do
@@ -38,8 +69,8 @@ function spawnRandomShape()
     newShape.y=display.contentHeight/4+math.random(display.contentHeight/2)
     table.insert(displayObjects,newShape)
     newShape:addEventListener("touch", onShapeTouch)
-    physics.addBody(newShape)
-    newShape.bodyType = "dynamic"
+    physics.addBody( newShape, "dynamic", { radius=75, bounce=1 } )
+    newShape:setLinearVelocity(20+math.random(30),20+math.random(30))
 end
 
 function onShapeTouch(event)
@@ -96,8 +127,10 @@ function scene:show( event )
         	nextSceneButton:addEventListener( "touch", nextSceneButton )
         end
 
-        physics.start() --true/false for sleeping bodies
-        physics.setGravity( 0, 6 )
+        physics.start(false) --true/false for sleeping bodies
+        physics.setGravity( 0, 0 )
+
+        boundryBuilder()
 
         spawnRandomShape()
     end 
