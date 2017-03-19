@@ -15,36 +15,44 @@ local displayObjects = {}
 
 ---------------------------------------------------------------------------------
 -- Create Boundries
-local boundry = {}
-function boundryBuilder()
+local boundary = {}
+function boundaryBuilder()
     local top = display.newImage("images/oneBlackPixel.png")
     top.x=display.contentWidth/2
     top.y=0
     top.height=1
     top.width=display.contentWidth
-    table.insert(boundry,top)
+    table.insert(boundary,top)
     physics.addBody(top,"static")
     local bottom = display.newImage("images/oneBlackPixel.png")
     bottom.x=display.contentWidth/2
     bottom.y=display.contentHeight-1
     bottom.height=1
     bottom.width=display.contentWidth
-    table.insert(boundry,bottom)
+    table.insert(boundary,bottom)
     physics.addBody(bottom,"static")
     local left = display.newImage("images/oneBlackPixel.png")
     left.x=0
     left.y=display.contentHeight/2
     left.height=display.contentHeight
     left.width=1
-    table.insert(boundry,left)
+    table.insert(boundary,left)
     physics.addBody(left,"static")
     local right = display.newImage("images/oneBlackPixel.png")
     right.x=display.contentWidth-1
     right.y=display.contentHeight/2
     right.height=display.contentHeight
     right.width=1
-    table.insert(boundry,right)
+    table.insert(boundary,right)
     physics.addBody(right,"static")
+end
+
+---------------------------------------------------------------------------------
+-- Boundary Remover
+function removeBoundary()
+    for i=1, table.getn(boundary) do
+        display.remove(boundary[i])
+    end
 end
 
 
@@ -75,6 +83,7 @@ function spawnRandomShape()
     newShape:addEventListener("touch", onShapeTouch)
     physics.addBody( newShape, "dynamic", { radius=75, bounce=1 } )
     newShape:setLinearVelocity(20+math.random(30),20+math.random(30))
+    newShape:applyTorque(-10+math.random(20))
 end
 
 function onShapeTouch(event)
@@ -113,7 +122,17 @@ function scene:show( event )
         local goToScene3Text = self:getObjectByName( "GoToScene3Text" )
         goToScene3Text.x = display.contentWidth - 95
         goToScene3Text.y =  23
+
+        physics.start(false) --true/false for sleeping bodies
+        physics.setGravity( 0, 0 )
+        boundaryBuilder()
+
+
     elseif phase == "did" then
+
+        spawnRandomShape()
+
+
         -- Called when the scene is now on screen
         -- 
         -- INSERT code here to make the scene come alive
@@ -130,13 +149,6 @@ function scene:show( event )
         	-- add the touch event listener to the button
         	nextSceneButton:addEventListener( "touch", nextSceneButton )
         end
-
-        physics.start(false) --true/false for sleeping bodies
-        physics.setGravity( 0, 0 )
-
-        boundryBuilder()
-
-        spawnRandomShape()
     end 
 end
 
@@ -145,6 +157,10 @@ function scene:hide( event )
     local phase = event.phase
 
     if event.phase == "will" then
+        removeDisplayedShapes()
+        removeBoundary()
+
+
         -- Called when the scene is on screen and is about to move off screen
         --
         -- INSERT code here to pause the scene
