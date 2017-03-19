@@ -17,30 +17,34 @@ local displayObjects = {}
 -- Create Boundries
 local boundry = {}
 function boundryBuilder()
-    print(display.contentHeight)
-    print(display.contentWidth)
-    local line1 = display.newLine(0,0,0,display.contentHeight)
-    line1:setStrokeColor( 1, 0, 0, 1 )
-    line1.strokeWidth = 8
-    local line2 = display.newLine(0,display.contentHeight,
-        display.contentWidth,display.contentHeight)
-    line2:setStrokeColor( 1, 0, 0, 1 )
-    line2.strokeWidth = 8
-    local line3 = display.newLine(display.contentWidth,display.contentHeight,
-        display.contentWidth,0)
-    line3:setStrokeColor( 1, 0, 0, 1 )
-    line3.strokeWidth = 8
-    local line4 = display.newLine(0,0,display.contentWidth,0)
-    line4:setStrokeColor( 1, 0, 0, 1 )
-    line4.strokeWidth = 8
-    table.insert(boundry,line1)
-    table.insert(boundry,line2)
-    table.insert(boundry,line3)
-    table.insert(boundry,line4)
-    physics.addBody(line1,"static")
-    physics.addBody(line2,"static")
-    physics.addBody(line3,"static")
-    physics.addBody(line4,"static")
+    local top = display.newImage("images/oneBlackPixel.png")
+    top.x=display.contentWidth/2
+    top.y=0
+    top.height=1
+    top.width=display.contentWidth
+    table.insert(boundry,top)
+    physics.addBody(top,"static")
+    local bottom = display.newImage("images/oneBlackPixel.png")
+    bottom.x=display.contentWidth/2
+    bottom.y=display.contentHeight-1
+    bottom.height=1
+    bottom.width=display.contentWidth
+    table.insert(boundry,bottom)
+    physics.addBody(bottom,"static")
+    local left = display.newImage("images/oneBlackPixel.png")
+    left.x=0
+    left.y=display.contentHeight/2
+    left.height=display.contentHeight
+    left.width=1
+    table.insert(boundry,left)
+    physics.addBody(left,"static")
+    local right = display.newImage("images/oneBlackPixel.png")
+    right.x=display.contentWidth-1
+    right.y=display.contentHeight/2
+    right.height=display.contentHeight
+    right.width=1
+    table.insert(boundry,right)
+    physics.addBody(right,"static")
 end
 
 
