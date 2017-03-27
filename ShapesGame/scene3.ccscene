@@ -38,7 +38,7 @@
         "id2": {
             "alpha": 1, 
             "createdAtStart": true, 
-            "font": "native.systemFont", 
+            "font": "FN Blocknote Hand Regular.ttf", 
             "id": "Page", 
             "isVisible": true, 
             "rotation": 0, 
@@ -128,7 +128,7 @@
         "id4": {
             "alpha": 1, 
             "createdAtStart": true, 
-            "font": "native.systemFont", 
+            "font": "FN Blocknote Hand Regular.ttf", 
             "id": "GoToScene1Text", 
             "isVisible": true, 
             "rotation": 0, 
@@ -162,7 +162,7 @@
         "id5": {
             "alpha": 1, 
             "createdAtStart": true, 
-            "font": "native.systemFont", 
+            "font": "FN Blocknote Hand Regular.ttf", 
             "id": "Title", 
             "isVisible": true, 
             "rotation": 0, 
