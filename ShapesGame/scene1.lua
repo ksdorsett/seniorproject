@@ -12,6 +12,31 @@ local composer = require( "composer" )
 local scene = composer.newScene( sceneName )
 
 ---------------------------------------------------------------------------------
+--Load Save Data
+function loadData()
+    -- Path for the file to read
+    local path = system.pathForFile( "saveData.txt", system.DocumentsDirectory )
+ 
+    -- Open the file handle
+    local file, errorString = io.open( path, "r" )
+
+    if not file then
+        -- Error occurred; output the cause
+        composer.setVariable("totalHits",0)
+        composer.setVariable("totalClicks",0)
+    else
+        -- Read data from file
+        local contents = file:read( "*a" )
+        -- Output the file contents
+        print( "Contents of " .. path .. "\n" .. contents )
+        -- Close the file handle
+        io.close( file )
+    end
+ 
+    file = nil
+end
+
+---------------------------------------------------------------------------------
 
 local nextSceneButton
 
@@ -22,6 +47,9 @@ function scene:create( event )
     -- 
     -- INSERT code here to initialize the scene
     -- e.g. add display objects to 'sceneGroup', add touch listeners, etc
+    loadData()
+    print("totalClicks is" .. composer.getVariable("totalClicks"))
+    print("totalHits is" .. composer.getVariable("totalHits"))
 end
 
 function scene:show( event )

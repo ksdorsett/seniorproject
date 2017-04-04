@@ -14,6 +14,32 @@ local scene = composer.newScene( sceneName )
 local displayObjects = {}
 
 ---------------------------------------------------------------------------------
+-- Save Data
+
+function saveData()
+    -- Data (string) to write
+    local saveData = "My app state data"
+ 
+    -- Path for the file to write
+    local path = system.pathForFile( "saveData.txt", system.DocumentsDirectory )
+ 
+    -- Open the file handle
+    local file, errorString = io.open( path, "w" )
+ 
+    if not file then
+        -- Error occurred; output the cause
+        print( "File error: " .. errorString )
+    else
+        -- Write data to file
+        file:write( saveData )
+        -- Close the file handle
+        io.close( file )
+    end
+ 
+    file = nil
+end
+
+---------------------------------------------------------------------------------
 -- Create Boundries
 local boundary = {}
 function boundaryBuilder()
@@ -90,12 +116,39 @@ function onShapeTouch(event)
     if ( event.phase == "ended" ) then
         removeDisplayedShapes()
         spawnRandomShape()
+        composer.setVariable("totalHits",composer.getVariable("totalHits")+1)
+        print("totalHits is" .. composer.getVariable("totalHits"))
     end
 end
 
 ---------------------------------------------------------------------------------
---Remove shape and spawn new one
+--On any click
 
+function onTouch(event)
+    if ( event.phase == "ended" ) then
+        composer.setVariable("totalClicks",composer.getVariable("totalClicks")+1)
+        print("totalClicks is" .. composer.getVariable("totalClicks"))
+    end
+end
+
+---------------------------------------------------------------------------------
+-- Create Background (hitbox for touch)
+local background
+function backgroundBuilder()
+    background = display.newImage("images/oneBlackPixel.png")
+    background.x=display.contentWidth/2
+    background.y=display.contentHeight/2
+    background.height=display.contentHeight
+    background.width=display.contentWidth
+    background:addEventListener("touch", onTouch)
+    background:toBack()
+end
+
+---------------------------------------------------------------------------------
+-- Remove Background (hitbox for touch)
+function removeBackground()
+    display.remove(background)
+end
 
 ---------------------------------------------------------------------------------
 
@@ -126,6 +179,7 @@ function scene:show( event )
         physics.start(false) --true/false for sleeping bodies
         physics.setGravity( 0, 0 )
         boundaryBuilder()
+        backgroundBuilder()
 
 
     elseif phase == "did" then
@@ -159,6 +213,7 @@ function scene:hide( event )
     if event.phase == "will" then
         removeDisplayedShapes()
         removeBoundary()
+        removeBackground()
 
 
         -- Called when the scene is on screen and is about to move off screen
