@@ -11,6 +11,46 @@ local composer = require( "composer" )
 -- Load scene with same root filename as this file
 local scene = composer.newScene( sceneName )
 
+local displayText = {}
+
+---------------------------------------------------------------------------------
+-- Displays Statistics
+
+function displayStats()
+    local sessionHits = display.newText("Total hits this session was "..
+        composer.getVariable("currentHits"),display.contentWidth/2,
+        display.contentHeight/5, "FN Blocknote Hand Regular.ttf")
+    sessionHits:setFillColor( 1, 0, 0 )
+    table.insert(displayText, sessionHits)
+
+    local sessionClicks = display.newText("Total clicks this session was "..
+        composer.getVariable("currentClicks"),display.contentWidth/2,
+        (display.contentHeight/5)*2, "FN Blocknote Hand Regular.ttf")
+    sessionClicks:setFillColor( 1, 0, 0 )
+    table.insert(displayText, sessionClicks)
+
+    local totalHits = display.newText("Total all time hits are "..
+        composer.getVariable("totalHits"),display.contentWidth/2,
+        (display.contentHeight/5)*3, "FN Blocknote Hand Regular.ttf")
+    totalHits:setFillColor( 1, 0, 0 )
+    table.insert(displayText, totalHits)
+
+    local totalClicks = display.newText("Total all time clicks are "..
+        composer.getVariable("totalClicks"),display.contentWidth/2,
+        (display.contentHeight/5)*4, "FN Blocknote Hand Regular.ttf")
+    totalClicks:setFillColor( 1, 0, 0 )
+    table.insert(displayText, totalClicks)
+end
+
+---------------------------------------------------------------------------------
+-- Removes Display Text
+
+function removeDisplayText()
+    for i=1, table.getn(displayText) do
+        display.remove(displayText[i])
+    end
+end
+
 ---------------------------------------------------------------------------------
 
 local nextSceneButton
@@ -45,6 +85,10 @@ function scene:show( event )
         -- 
         -- INSERT code here to make the scene come alive
         -- e.g. start timers, begin animation, play audio, etc
+
+        displayStats()
+
+
         nextSceneButton = self:getObjectByName( "GoToScene1Btn" )
         if nextSceneButton then
         	-- touch listener for the button
@@ -69,6 +113,9 @@ function scene:hide( event )
         --
         -- INSERT code here to pause the scene
         -- e.g. stop timers, stop animation, unload sounds, etc.)
+
+        removeDisplayText()
+
     elseif phase == "did" then
         -- Called when the scene is now off screen
 		if nextSceneButton then

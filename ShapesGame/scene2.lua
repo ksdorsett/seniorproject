@@ -118,6 +118,7 @@ function onShapeTouch(event)
         spawnRandomShape()
         composer.setVariable("totalHits",composer.getVariable("totalHits")+1)
         print("totalHits is" .. composer.getVariable("totalHits"))
+        composer.setVariable("currentHits",composer.getVariable("currentHits")+1)
     end
 end
 
@@ -128,6 +129,7 @@ function onTouch(event)
     if ( event.phase == "ended" ) then
         composer.setVariable("totalClicks",composer.getVariable("totalClicks")+1)
         print("totalClicks is" .. composer.getVariable("totalClicks"))
+        composer.setVariable("currentClicks",composer.getVariable("currentClicks")+1)
     end
 end
 
@@ -180,6 +182,9 @@ function scene:show( event )
         physics.setGravity( 0, 0 )
         boundaryBuilder()
         backgroundBuilder()
+
+        composer.setVariable("currentHits",0)
+        composer.setVariable("currentClicks",0)
 
 
     elseif phase == "did" then
