@@ -14,6 +14,15 @@ local scene = composer.newScene( sceneName )
 local displayObjects = {}
 
 ---------------------------------------------------------------------------------
+-- Click Fix (last click on close button)
+
+function clickFix()
+    composer.setVariable("totalClicks",composer.getVariable("totalClicks")-1)
+    composer.setVariable("currentClicks",composer.getVariable("currentClicks")-1)
+end
+
+
+---------------------------------------------------------------------------------
 -- Save Data
 
 function saveData()
@@ -203,6 +212,7 @@ function scene:show( event )
         		local phase = event.phase
         		if "ended" == phase then
         			composer.gotoScene( "scene3", { effect = "fade", time = 300 } )
+                    clickFix()
         		end
         	end
         	-- add the touch event listener to the button
