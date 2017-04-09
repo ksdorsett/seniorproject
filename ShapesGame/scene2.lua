@@ -13,6 +13,8 @@ local physics = require( "physics" )
 local scene = composer.newScene( sceneName )
 local displayObjects = {}
 
+local currentShape = 0
+
 ---------------------------------------------------------------------------------
 -- Click Fix (last click on close button)
 
@@ -105,10 +107,11 @@ end
 local shapeArray = {"Circle", "Triangle", "Square", "Rectangle", "Diamond", "Oval"}
 local firstShape
 --Storing objects currently displayed on screen
-local onShapeTouch,spawnRandomShape
+local onShapeTouch,spawnRandomShape,onWrongShapeTouch,spawnWrongShape,spawnAllWrongShapes
 
 function spawnRandomShape()
-    local newShape = display.newImage("images/shapes/"..shapeArray[math.random(table.getn(shapeArray))]..".png")
+    currentShape = math.random(table.getn(shapeArray))
+    local newShape = display.newImage("images/shapes/"..shapeArray[currentShape]..".png")
     --newShape.height=100
     --newShape.width=100
     newShape:scale(.1,.1)
@@ -119,6 +122,8 @@ function spawnRandomShape()
     physics.addBody( newShape, "dynamic", { radius=75, bounce=1 } )
     newShape:setLinearVelocity(20+math.random(30),20+math.random(30))
     newShape:applyTorque(-10+math.random(20))
+    spawnAllWrongShapes()
+    print("Correct Shape is "..shapeArray[currentShape])
 end
 
 function onShapeTouch(event)
@@ -128,6 +133,48 @@ function onShapeTouch(event)
         composer.setVariable("totalHits",composer.getVariable("totalHits")+1)
         print("totalHits is" .. composer.getVariable("totalHits"))
         composer.setVariable("currentHits",composer.getVariable("currentHits")+1)
+    end
+end
+
+---------------------------------------------------------------------------------
+-- Wrong Shape Spawner
+function onWrongShapeTouch(event)
+    if ( event.phase == "ended" ) then
+        --call the click on shape voice function
+        print("Wrong Shape Clicked")
+    end
+end
+
+function spawnWrongShape()
+    local wrongShape = math.random(table.getn(shapeArray))
+    while wrongShape==currentShape do
+        wrongShape = math.random(table.getn(shapeArray))
+    end
+    local newShape = display.newImage("images/shapes/"..shapeArray[wrongShape]..".png")
+    --newShape.height=100
+    --newShape.width=100
+    newShape:scale(.1,.1)
+    newShape.x=display.contentWidth/4+math.random(display.contentWidth/2)
+    newShape.y=display.contentHeight/4+math.random(display.contentHeight/2)
+    table.insert(displayObjects,newShape)
+    newShape:addEventListener("touch", onWrongShapeTouch)
+    physics.addBody( newShape, "dynamic", { radius=75, bounce=1 } )
+    newShape:setLinearVelocity(20+math.random(30),20+math.random(30))
+    newShape:applyTorque(-10+math.random(20))
+end
+
+---------------------------------------------------------------------------------
+-- Multiple Wrong Shape Spawner (Based on current level)
+
+function spawnAllWrongShapes()
+    local currentLevel = math.floor(composer.getVariable("currentHits")/10)
+    print("Current Level is "..currentLevel)
+    if (currentLevel>4) then
+        currentLevel=4
+    end
+    for i = 1, currentLevel do
+        spawnWrongShape()
+        print("Spawned Wrong Shape "..i)
     end
 end
 
