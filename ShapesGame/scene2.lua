@@ -15,6 +15,8 @@ local displayObjects = {}
 
 local currentShape = 0
 
+local shapeArray = {"Circle", "Triangle", "Square", "Rectangle", "Diamond", "Oval"}
+
 ---------------------------------------------------------------------------------
 -- Click Fix (last click on close button)
 
@@ -23,6 +25,17 @@ function clickFix()
     composer.setVariable("currentClicks",composer.getVariable("currentClicks")-1)
 end
 
+---------------------------------------------------------------------------------
+-- Load Sounds
+local soundArray = {}
+local tryAgainSound
+function loadSounds()
+    for i=1, table.getn(shapeArray) do
+        local clickSound = audio.loadSound( "sounds/click"..shapeArray[i]..".wav" )
+        table.insert(soundArray,clickSound)
+    end
+    tryAgainSound = audio.loadSound( "sounds/tryAgain.wav")
+end
 
 ---------------------------------------------------------------------------------
 -- Save Data
@@ -103,8 +116,6 @@ end
 
 ---------------------------------------------------------------------------------
 -- Shape Spawner
-
-local shapeArray = {"Circle", "Triangle", "Square", "Rectangle", "Diamond", "Oval"}
 local firstShape
 --Storing objects currently displayed on screen
 local onShapeTouch,spawnRandomShape,onWrongShapeTouch,spawnWrongShape,spawnAllWrongShapes
@@ -124,6 +135,7 @@ function spawnRandomShape()
     newShape:applyTorque(-10+math.random(20))
     spawnAllWrongShapes()
     print("Correct Shape is "..shapeArray[currentShape])
+    audio.play(soundArray[currentShape])
 end
 
 function onShapeTouch(event)
@@ -141,6 +153,7 @@ end
 function onWrongShapeTouch(event)
     if ( event.phase == "ended" ) then
         --call the click on shape voice function
+        audio.play(tryAgainSound)
         print("Wrong Shape Clicked")
     end
 end
@@ -219,6 +232,8 @@ function scene:create( event )
     -- 
     -- INSERT code here to initialize the scene
     -- e.g. add display objects to 'sceneGroup', add touch listeners, etc
+
+    loadSounds()
 end
 
 function scene:show( event )
