@@ -39,6 +39,7 @@ end
 ---------------------------------------------------------------------------------
 
 local nextSceneButton
+local muteButton
 
 function scene:create( event )
     local sceneGroup = self.view
@@ -50,6 +51,9 @@ function scene:create( event )
     loadData()
     print("totalClicks is" .. composer.getVariable("totalClicks"))
     print("totalHits is" .. composer.getVariable("totalHits"))
+    local backgroundMusic = audio.loadSound( "sounds/bensound-cute.wav")
+    audio.setVolume( 0.25, { channel=1 } )
+    audio.play(backgroundMusic, {channel = 1, loops = -1, fadein = 5000})
 end
 
 function scene:show( event )
@@ -86,6 +90,20 @@ function scene:show( event )
         	end
         	-- add the touch event listener to the button
         	nextSceneButton:addEventListener( "touch", nextSceneButton )
+        end
+
+        muteButton = self:getObjectByName( "MuteBtn" )
+        if muteButton then
+            -- touch listener for the button
+            function muteButton:touch ( event )
+                local phase = event.phase
+                if "ended" == phase then
+                    print("Clicked mute")
+                    audio.pause(0)
+                end
+            end
+            -- add the touch event listener to the button
+            muteButton:addEventListener( "touch", muteButton )
         end
         
     end 
