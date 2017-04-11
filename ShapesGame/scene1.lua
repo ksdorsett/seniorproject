@@ -54,6 +54,7 @@ function scene:create( event )
     local backgroundMusic = audio.loadSound( "sounds/bensound-cute.wav")
     audio.setVolume( 0.25, { channel=1 } )
     audio.play(backgroundMusic, {channel = 1, loops = -1, fadein = 5000})
+    --display.newImage("images/testGif.gif",100,100)
 end
 
 function scene:show( event )
@@ -99,7 +100,7 @@ function scene:show( event )
                 local phase = event.phase
                 if "ended" == phase then
                     print("Clicked mute")
-                    audio.pause(0)
+                    audio.pause(1)
                 end
             end
             -- add the touch event listener to the button

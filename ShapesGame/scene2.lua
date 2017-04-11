@@ -125,7 +125,7 @@ function spawnRandomShape()
     local newShape = display.newImage("images/shapes/"..shapeArray[currentShape]..".png")
     --newShape.height=100
     --newShape.width=100
-    newShape:scale(.1,.1)
+    newShape:scale(.5,.5)
     newShape.x=display.contentWidth/4+math.random(display.contentWidth/2)
     newShape.y=display.contentHeight/4+math.random(display.contentHeight/2)
     table.insert(displayObjects,newShape)
@@ -166,7 +166,7 @@ function spawnWrongShape()
     local newShape = display.newImage("images/shapes/"..shapeArray[wrongShape]..".png")
     --newShape.height=100
     --newShape.width=100
-    newShape:scale(.1,.1)
+    newShape:scale(.5,.5)
     newShape.x=display.contentWidth/4+math.random(display.contentWidth/2)
     newShape.y=display.contentHeight/4+math.random(display.contentHeight/2)
     table.insert(displayObjects,newShape)
