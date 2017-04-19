@@ -55,6 +55,7 @@ function scene:create( event )
     audio.setVolume( 0.25, { channel=1 } )
     audio.play(backgroundMusic, {channel = 1, loops = -1, fadein = 5000})
     --display.newImage("images/testGif.gif",100,100)
+    composer.setVariable("muted",0)
 end
 
 function scene:show( event )
@@ -99,8 +100,15 @@ function scene:show( event )
             function muteButton:touch ( event )
                 local phase = event.phase
                 if "ended" == phase then
-                    print("Clicked mute")
-                    audio.pause(1)
+                    --print("Clicked mute")
+                    --print("muted is"..composer.getVariable("muted"))
+                    if composer.getVariable("muted")==0 then
+                        audio.pause(1)
+                        composer.setVariable("muted",1)
+                    else
+                        audio.resume(1)
+                        composer.setVariable("muted",0)
+                    end
                 end
             end
             -- add the touch event listener to the button
@@ -124,6 +132,9 @@ function scene:hide( event )
 		if nextSceneButton then
 			nextSceneButton:removeEventListener( "touch", nextSceneButton )
 		end
+        if muteButton then
+            muteButton:removeEventListener( "touch", muteButton )
+        end
     end 
 end
 
