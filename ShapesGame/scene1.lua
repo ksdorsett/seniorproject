@@ -35,8 +35,8 @@ function loadData()
         print( "Saved Hits"..savedHits)
         print( "Saved Clicks"..savedClicks)
 
-        composer.setVariable("totalHits", savedHits)
-        composer.setVariable("totalClicks", savedClicks)
+        composer.setVariable("totalHits", tonumber(savedHits))
+        composer.setVariable("totalClicks", tonumber(savedClicks))
         composer.setVariable("currentHits",0)
         composer.setVariable("currentClicks",0)
 
@@ -158,6 +158,9 @@ function scene:hide( event )
 		end
         if muteButton then
             muteButton:removeEventListener( "touch", muteButton )
+        end
+        if statsButton then
+            statsButton:removeEventListener( "touch", statsButton )
         end
     end 
 end
