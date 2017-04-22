@@ -24,11 +24,23 @@ function loadData()
         -- Error occurred; output the cause
         composer.setVariable("totalHits",0)
         composer.setVariable("totalClicks",0)
+        composer.setVariable("currentHits",0)
+        composer.setVariable("currentClicks",0)
     else
         -- Read data from file
-        local contents = file:read( "*a" )
+        local savedHits = file:read( "*l" )
+        local savedClicks = file:read( "*l" )
         -- Output the file contents
-        print( "Contents of " .. path .. "\n" .. contents )
+        print( "Contents of " .. path)
+        print( "Saved Hits"..savedHits)
+        print( "Saved Clicks"..savedClicks)
+
+        composer.setVariable("totalHits", savedHits)
+        composer.setVariable("totalClicks", savedClicks)
+        composer.setVariable("currentHits",0)
+        composer.setVariable("currentClicks",0)
+
+
         -- Close the file handle
         io.close( file )
     end
@@ -113,6 +125,18 @@ function scene:show( event )
             end
             -- add the touch event listener to the button
             muteButton:addEventListener( "touch", muteButton )
+        end
+        statsButton = self:getObjectByName( "GoToStatsBtn")
+         if statsButton then
+            -- touch listener for the button
+            function statsButton:touch ( event )
+                local phase = event.phase
+                if "ended" == phase then
+                    composer.gotoScene( "scene3", { effect = "fade", time = 300 } )
+                end
+            end
+            -- add the touch event listener to the button
+            statsButton:addEventListener( "touch", statsButton )
         end
         
     end 

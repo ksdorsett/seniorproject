@@ -42,7 +42,8 @@ end
 
 function saveData()
     -- Data (string) to write
-    local saveData = "My app state data"
+    local saveData = composer.getVariable("totalHits").."\n"
+    ..composer.getVariable("totalClicks")
  
     -- Path for the file to write
     local path = system.pathForFile( "saveData.txt", system.DocumentsDirectory )
@@ -273,6 +274,8 @@ function scene:show( event )
         	function nextSceneButton:touch ( event )
         		local phase = event.phase
         		if "ended" == phase then
+                saveData()
+                print("Saved Data")
         			composer.gotoScene( "scene3", { effect = "fade", time = 300 } )
                     clickFix()
         		end

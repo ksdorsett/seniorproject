@@ -13,33 +13,6 @@ local scene = composer.newScene( sceneName )
 
 local displayText = {}
 
-function resetData()
-    composer.setVariable("currentHits",0)
-    composer.setVariable("currentClicks",0)
-    composer.setVariable("totalHits",0)
-    composer.setVariable("totalClicks",0)
-    -- Data (string) to write
-    local saveData = "0\n0"
- 
-    -- Path for the file to write
-    local path = system.pathForFile( "saveData.txt", system.DocumentsDirectory )
- 
-    -- Open the file handle
-    local file, errorString = io.open( path, "w" )
- 
-    if not file then
-        -- Error occurred; output the cause
-        print( "File error: " .. errorString )
-    else
-        -- Write data to file
-        file:write( saveData )
-        -- Close the file handle
-        io.close( file )
-    end
- 
-    file = nil
-end
-
 ---------------------------------------------------------------------------------
 -- Displays Statistics
 
@@ -176,20 +149,6 @@ function scene:show( event )
         	-- add the touch event listener to the button
         	nextSceneButton:addEventListener( "touch", nextSceneButton )
         end
-
-        resetButton = self:getObjectByName( "ResetBtn")
-         if resetButton then
-            -- touch listener for the button
-            function resetButton:touch ( event )
-                local phase = event.phase
-                if "ended" == phase then
-                    resetData()
-                    composer.gotoScene( "scene1", { effect = "fade", time = 300 } )
-                end
-            end
-            -- add the touch event listener to the button
-            resetButton:addEventListener( "touch", resetButton )
-        end
     end 
 end
 
@@ -204,16 +163,12 @@ function scene:hide( event )
         -- e.g. stop timers, stop animation, unload sounds, etc.)
 
         removeDisplayText()
-        displayText={}
 
     elseif phase == "did" then
         -- Called when the scene is now off screen
 		if nextSceneButton then
 			nextSceneButton:removeEventListener( "touch", nextSceneButton )
 		end
-        if resetButton then
-            resetButton:removeEventListener( "touch", resetButton )
-        end
     end 
 end
 
