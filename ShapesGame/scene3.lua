@@ -19,51 +19,79 @@ local displayText = {}
 function displayStats()
     local sessionHits2 = display.newText("Total successful clicks this session was "..
         composer.getVariable("currentHits"),(display.contentWidth/2)+1,
-        (display.contentHeight/5)+1, "FN Blocknote Hand Regular.ttf")
+        ((display.contentHeight/10)*2)+1, "FN Blocknote Hand Regular.ttf")
     sessionHits2:setFillColor( 0, 0, 0 )
     table.insert(displayText, sessionHits2)
 
     local sessionClicks2 = display.newText("Total clicks this session was "..
         composer.getVariable("currentClicks"),(display.contentWidth/2)+1,
-        ((display.contentHeight/5)*2)+1, "FN Blocknote Hand Regular.ttf")
+        ((display.contentHeight/10)*3)+1, "FN Blocknote Hand Regular.ttf")
     sessionClicks2:setFillColor( 0, 0, 0 )
     table.insert(displayText, sessionClicks2)
 
+    local sessionPercentage2 = display.newText("Hit percentage this session was "..
+        math.floor(composer.getVariable("currentHits")/composer.getVariable("currentClicks")*100)
+        .."%",(display.contentWidth/2)+1,
+        ((display.contentHeight/10)*4)+1, "FN Blocknote Hand Regular.ttf")
+    sessionPercentage2:setFillColor( 0, 0, 0 )
+    table.insert(displayText, sessionPercentage2)
+
     local totalHits2 = display.newText("Total successful clicks all time are "..
         composer.getVariable("totalHits"),(display.contentWidth/2)+1,
-        ((display.contentHeight/5)*3)+1, "FN Blocknote Hand Regular.ttf")
+        ((display.contentHeight/10)*5)+1, "FN Blocknote Hand Regular.ttf")
     totalHits2:setFillColor( 0, 0, 0 )
     table.insert(displayText, totalHits2)
 
     local totalClicks2 = display.newText("Total clicks all time are "..
         composer.getVariable("totalClicks"),(display.contentWidth/2)+1,
-        ((display.contentHeight/5)*4)+1, "FN Blocknote Hand Regular.ttf")
+        ((display.contentHeight/10)*6)+1, "FN Blocknote Hand Regular.ttf")
     totalClicks2:setFillColor( 0, 0, 0 )
     table.insert(displayText, totalClicks2)
 
+    local totalPercentage2 = display.newText("Hit percentage all time is "..
+        math.floor(composer.getVariable("totalHits")/composer.getVariable("totalClicks")*100)
+        .."%",(display.contentWidth/2)+1,
+        ((display.contentHeight/10)*7)+1, "FN Blocknote Hand Regular.ttf")
+    totalPercentage2:setFillColor( 0, 0, 0 )
+    table.insert(displayText, totalPercentage2)
+
     local sessionHits = display.newText("Total successful clicks this session was "..
         composer.getVariable("currentHits"),display.contentWidth/2,
-        display.contentHeight/5, "FN Blocknote Hand Regular.ttf")
+        (display.contentHeight/10)*2, "FN Blocknote Hand Regular.ttf")
     sessionHits:setFillColor( 1, 0, 0 )
     table.insert(displayText, sessionHits)
 
     local sessionClicks = display.newText("Total clicks this session was "..
         composer.getVariable("currentClicks"),display.contentWidth/2,
-        (display.contentHeight/5)*2, "FN Blocknote Hand Regular.ttf")
+        (display.contentHeight/10)*3, "FN Blocknote Hand Regular.ttf")
     sessionClicks:setFillColor( 1, 0, 0 )
     table.insert(displayText, sessionClicks)
 
+    local sessionPercentage = display.newText("Hit percentage this session was "..
+        math.floor(composer.getVariable("currentHits")/composer.getVariable("currentClicks")*100)
+        .."%",display.contentWidth/2,
+        (display.contentHeight/10)*4, "FN Blocknote Hand Regular.ttf")
+    sessionPercentage:setFillColor( 1, 0, 0 )
+    table.insert(displayText, sessionPercentage)
+
     local totalHits = display.newText("Total successful clicks all time are "..
         composer.getVariable("totalHits"),display.contentWidth/2,
-        (display.contentHeight/5)*3, "FN Blocknote Hand Regular.ttf")
+        (display.contentHeight/10)*5, "FN Blocknote Hand Regular.ttf")
     totalHits:setFillColor( 1, 0, 0 )
     table.insert(displayText, totalHits)
 
     local totalClicks = display.newText("Total clicks all time are "..
         composer.getVariable("totalClicks"),display.contentWidth/2,
-        (display.contentHeight/5)*4, "FN Blocknote Hand Regular.ttf")
+        (display.contentHeight/10)*6, "FN Blocknote Hand Regular.ttf")
     totalClicks:setFillColor( 1, 0, 0 )
     table.insert(displayText, totalClicks)
+
+    local totalPercentage = display.newText("Hit percentage all time is "..
+        math.floor(composer.getVariable("totalHits")/composer.getVariable("totalClicks")*100)
+        .."%",display.contentWidth/2,
+        (display.contentHeight/10)*7, "FN Blocknote Hand Regular.ttf")
+    totalPercentage:setFillColor( 1, 0, 0 )
+    table.insert(displayText, totalPercentage)
 end
 
 ---------------------------------------------------------------------------------
