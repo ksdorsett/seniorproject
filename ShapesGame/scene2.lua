@@ -67,28 +67,28 @@ end
 -- Create Boundries
 local boundary = {}
 function boundaryBuilder()
-    local top = display.newImage("images/oneBlackPixel.png")
+    local top = display.newImage("images/mtPixel.png")
     top.x=display.contentWidth/2
     top.y=0
     top.height=1
     top.width=display.contentWidth
     table.insert(boundary,top)
     physics.addBody(top,"static")
-    local bottom = display.newImage("images/oneBlackPixel.png")
+    local bottom = display.newImage("images/mtPixel.png")
     bottom.x=display.contentWidth/2
     bottom.y=display.contentHeight-1
     bottom.height=1
     bottom.width=display.contentWidth
     table.insert(boundary,bottom)
     physics.addBody(bottom,"static")
-    local left = display.newImage("images/oneBlackPixel.png")
+    local left = display.newImage("images/mtPixel.png")
     left.x=0
     left.y=display.contentHeight/2
     left.height=display.contentHeight
     left.width=1
     table.insert(boundary,left)
     physics.addBody(left,"static")
-    local right = display.newImage("images/oneBlackPixel.png")
+    local right = display.newImage("images/mtPixel.png")
     right.x=display.contentWidth-1
     right.y=display.contentHeight/2
     right.height=display.contentHeight
@@ -243,10 +243,10 @@ function scene:show( event )
     if phase == "will" then
         -- Called when the scene is still off screen and is about to move on screen
         local goToScene3Btn = self:getObjectByName( "GoToScene3Btn" )
-        goToScene3Btn.x = display.contentWidth - 95
+        goToScene3Btn.x = display.contentWidth - 40
         goToScene3Btn.y =  23
         local goToScene3Text = self:getObjectByName( "GoToScene3Text" )
-        goToScene3Text.x = display.contentWidth - 95
+        goToScene3Text.x = display.contentWidth - 40
         goToScene3Text.y =  23
 
         physics.start(false) --true/false for sleeping bodies
