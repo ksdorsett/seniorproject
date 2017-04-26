@@ -213,7 +213,7 @@ function scene:show( event )
                 local phase = event.phase
                 if "ended" == phase then
                     resetData()
-                    composer.gotoScene( "scene1", { effect = "fade", time = 300 } )
+                    composer.gotoScene( "scene3", { effect = "fade", time = 300 } )
                 end
             end
             -- add the touch event listener to the button

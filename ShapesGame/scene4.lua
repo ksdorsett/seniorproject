@@ -16,45 +16,7 @@ local displayText = {}
 ---------------------------------------------------------------------------------
 -- Displays Statistics
 
-function displayStats()
-    local sessionHits2 = display.newText("Total successful clicks this session was "..
-        composer.getVariable("currentHits"),(display.contentWidth/2)+1,
-        ((display.contentHeight/10)*2)+1, "FN Blocknote Hand Regular.ttf")
-    sessionHits2:setFillColor( 0, 0, 0 )
-    table.insert(displayText, sessionHits2)
-
-    local sessionClicks2 = display.newText("Total clicks this session was "..
-        composer.getVariable("currentClicks"),(display.contentWidth/2)+1,
-        ((display.contentHeight/10)*3)+1, "FN Blocknote Hand Regular.ttf")
-    sessionClicks2:setFillColor( 0, 0, 0 )
-    table.insert(displayText, sessionClicks2)
-
-    local sessionPercentage2 = display.newText("Hit percentage this session was "..
-        math.floor(composer.getVariable("currentHits")/composer.getVariable("currentClicks")*100)
-        .."%",(display.contentWidth/2)+1,
-        ((display.contentHeight/10)*4)+1, "FN Blocknote Hand Regular.ttf")
-    sessionPercentage2:setFillColor( 0, 0, 0 )
-    table.insert(displayText, sessionPercentage2)
-
-    local totalHits2 = display.newText("Total successful clicks all time are "..
-        composer.getVariable("totalHits"),(display.contentWidth/2)+1,
-        ((display.contentHeight/10)*5)+1, "FN Blocknote Hand Regular.ttf")
-    totalHits2:setFillColor( 0, 0, 0 )
-    table.insert(displayText, totalHits2)
-
-    local totalClicks2 = display.newText("Total clicks all time are "..
-        composer.getVariable("totalClicks"),(display.contentWidth/2)+1,
-        ((display.contentHeight/10)*6)+1, "FN Blocknote Hand Regular.ttf")
-    totalClicks2:setFillColor( 0, 0, 0 )
-    table.insert(displayText, totalClicks2)
-
-    local totalPercentage2 = display.newText("Hit percentage all time is "..
-        math.floor(composer.getVariable("totalHits")/composer.getVariable("totalClicks")*100)
-        .."%",(display.contentWidth/2)+1,
-        ((display.contentHeight/10)*7)+1, "FN Blocknote Hand Regular.ttf")
-    totalPercentage2:setFillColor( 0, 0, 0 )
-    table.insert(displayText, totalPercentage2)
-
+function displayCreds()
     local sessionHits = display.newText("Total successful clicks this session was "..
         composer.getVariable("currentHits"),display.contentWidth/2,
         (display.contentHeight/10)*2, "FN Blocknote Hand Regular.ttf")
@@ -134,7 +96,7 @@ function scene:show( event )
         -- INSERT code here to make the scene come alive
         -- e.g. start timers, begin animation, play audio, etc
 
-        displayStats()
+        displayCreds()
 
 
         nextSceneButton = self:getObjectByName( "GoToScene1Btn" )
@@ -163,6 +125,7 @@ function scene:hide( event )
         -- e.g. stop timers, stop animation, unload sounds, etc.)
 
         removeDisplayText()
+        displayText={}
 
     elseif phase == "did" then
         -- Called when the scene is now off screen

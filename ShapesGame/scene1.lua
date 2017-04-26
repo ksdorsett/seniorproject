@@ -112,8 +112,6 @@ function scene:show( event )
             function muteButton:touch ( event )
                 local phase = event.phase
                 if "ended" == phase then
-                    --print("Clicked mute")
-                    --print("muted is"..composer.getVariable("muted"))
                     if composer.getVariable("muted")==0 then
                         audio.pause(1)
                         composer.setVariable("muted",1)
@@ -138,6 +136,18 @@ function scene:show( event )
             -- add the touch event listener to the button
             statsButton:addEventListener( "touch", statsButton )
         end
+        creditsButton = self:getObjectByName( "GoToCreditsBtn")
+         if creditsButton then
+            -- touch listener for the button
+            function creditsButton:touch ( event )
+                local phase = event.phase
+                if "ended" == phase then
+                    composer.gotoScene( "scene4", { effect = "fade", time = 300 } )
+                end
+            end
+            -- add the touch event listener to the button
+            creditsButton:addEventListener( "touch", creditsButton )
+        end
         
     end 
 end
@@ -161,6 +171,9 @@ function scene:hide( event )
         end
         if statsButton then
             statsButton:removeEventListener( "touch", statsButton )
+        end
+        if creditsButton then
+            creditsButton:removeEventListener( "touch", creditsButton )
         end
     end 
 end
